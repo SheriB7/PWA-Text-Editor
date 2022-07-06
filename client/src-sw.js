@@ -27,7 +27,14 @@ warmStrategyCache({
 registerRoute(({ request }) => request.mode === "navigate", pageCache);
 
 registerRoute(({ request }) => {
-  console.log(request);
+  return (
+    // CSS
+    request.destination === "style" ||
+    // JavaScript
+    request.destination === "script" ||
+    request.destination === "worker" 
+  ),
+  // console.log(request);
   new StaleWhileRevalidate({
     cacheName: "assetCache",
     plugins: [
@@ -36,11 +43,5 @@ registerRoute(({ request }) => {
       }),
     ],
   });
-  return (
-    // CSS
-    request.destination === "style" ||
-    // JavaScript
-    request.destination === "script" ||
-    request.destination === "worker"
-  );
+  
 });
